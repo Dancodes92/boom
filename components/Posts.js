@@ -5,7 +5,7 @@ const posts = [
     id: 23,
     username: "dsauce",
     userImg: "./boom.png",
-    img: "./profile.jpeg",
+    img: "./roman.jpeg",
     caption: "nice",
   },
   {

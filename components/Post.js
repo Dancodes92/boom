@@ -28,8 +28,17 @@ function Post({ id, username, userImg, img, caption }) {
           <ChatIcon className="btn" />
           <PaperAirplaneIcon className="btn" />
         </div>
-        <BookmarkIcon className="btn"/>
+        <BookmarkIcon className="btn" />
       </div>
+      <p className="p-5 truncate">
+        <span className="bold mr-1">{username} </span>
+        {caption}
+      </p>
+      <form className="flex items-center p-4">
+        <EmojiHappyIcon className="h-7 pr-2" />
+        <input type="text" placeholder="add a comment..." className="flex-1 border-none focus:ring-0"/>
+        <button className='font-semibold text-msg'>Post</button>
+      </form>
     </div>
   );
 }
