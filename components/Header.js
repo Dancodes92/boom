@@ -10,15 +10,23 @@ import {
 } from "@heroicons/react/outline";
 import { HomeIcon } from "@heroicons/react/solid";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { useRecoilState } from "recoil";
+import { modalState } from "../atoms/modalAtom";
 
 function Header() {
   const { data: session } = useSession();
+  const [open, setOpen] = useRecoilState(modalState);
+  const router = useRouter();
 
   return (
     <div className="shadow-sm border-b bg-[#F7B538] sticky top-0 z-50">
       <div className="flex justify-between max-w-6xl mx-5 lg:mx-auto">
         {/* left */}
-        <div className="relative hidden lg:inline-grid w-24 cursor-pointer">
+        <div
+          onClick={() => router.push("/")}
+          className="relative hidden lg:inline-grid w-24 cursor-pointer"
+        >
           <Image src="/boom.png" layout="fill" alt="boom" objectFit="contain" />
         </div>
         <div className="relative w-10 lg:hidden flex shrink-0 cursor-pointer">
@@ -45,7 +53,7 @@ function Header() {
         </div>
         {/* right */}
         <div className="flex items-center justify-end space-x-4">
-          <HomeIcon className="navBar" />
+          <HomeIcon onClick={() => router.push("/")} className="navBar" />
           <MenuIcon className="h-6 md:hidden cursor-pointer" />
 
           {session ? (
@@ -57,7 +65,10 @@ function Header() {
                 </div>
               </div>
 
-              <PlusCircleIcon className="navBar hover:rotate-180" />
+              <PlusCircleIcon
+                onClick={() => setOpen(true)}
+                className="navBar hover:rotate-180"
+              />
               <UserGroupIcon className="navBar" />
               <HeartIcon className="navBar" />
 
