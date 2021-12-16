@@ -6,7 +6,7 @@ function signin({ providers }) {
   return (
     <>
       <Header />
-      <div className="flex flex-col items-center justify-center min-h-screen py-2 -mt-40">
+      <div className="flex flex-col items-center justify-center min-h-screen py-2 -mt-20">
         <img className="w-80" src="/boom.png" alt="boom logo" />
         <div className="mt-30">
           {Object.values(providers).map(provider => (
