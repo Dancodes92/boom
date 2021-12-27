@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilTransaction_UNSTABLE } from "recoil";
 import { modalState } from "../atoms/modalAtom";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react/cjs/react.production.min";
@@ -24,6 +24,7 @@ function Modal() {
   const [loading, setLoading] = useState(false);
   const captionRef = useRef(null);
   const { data: session } = useSession();
+  const [isImage, setImage] = useState(false);
 
   const uploadPost = async () => {
     if (loading) return;
@@ -55,12 +56,25 @@ function Modal() {
 
   const addImageToPost = e => {
     const reader = new FileReader();
-    if (e.target.files[0]) {
-      reader.readAsDataURL(e.target.files[0]);
+    console.log("is this true", !e.target.files[0].name.includes('heic'))
+    if(e.target.files[0].name.includes('heic')) {
+      alert("please select only images");
+      setImage(false);
+      setOpen(false);
     }
-    reader.onload = readerEvent => {
-      setSelectedFile(readerEvent.target.result);
-    };
+
+    if (!e.target.files[0].type.includes("image")) {
+      alert("please select only images");
+      setImage(false);
+      setOpen(false);
+    } else {
+      reader.readAsDataURL(e.target.files[0]);
+
+      reader.onload = readerEvent => {
+        setSelectedFile(readerEvent.target.result);
+        setImage(true);
+      };
+    }
   };
 
   return (
@@ -105,7 +119,7 @@ function Modal() {
                     src={selectedFile}
                     onClick={() => setSelectedFile(null)}
                     alt="selected file"
-                    className="w-full object-contain cursor-pointer"
+                    className="mx-auto flex items-center justify-center w-28"
                   />
                 ) : (
                   <div
@@ -147,14 +161,14 @@ function Modal() {
                   </div>
                 </div>
 
-                <div className="mt-5 sm:mt-6">
+                <div className="flex justify-center mt-5 sm:mt-6 items">
                   <button
                     type="button"
                     disabled={!selectedFile}
                     className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-boom hover:bg-msg focus:outline-none focus:border-boom focus:shadow-outline-boom active:bg-boom-dark transition ease-in-out duration-150 sm:text-sm sm:leading-5"
                     onClick={uploadPost}
                   >
-                   {loading ? "Uploading..." : "Upload"}
+                    {loading ? "Uploading..." : "Upload"}
                   </button>
                 </div>
               </div>

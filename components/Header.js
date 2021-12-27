@@ -27,7 +27,7 @@ function Header() {
           onClick={() => router.push("/")}
           className="relative hidden lg:inline-grid w-24 cursor-pointer"
         >
-          <Image src="/boom.png" layout="fill" alt="boom" objectFit="contain" />
+          <Image priority="false" src="/boom.png" layout="fill" alt="boom" objectFit="contain" />
         </div>
         <div className="relative w-10 lg:hidden flex shrink-0 cursor-pointer">
           <Image
